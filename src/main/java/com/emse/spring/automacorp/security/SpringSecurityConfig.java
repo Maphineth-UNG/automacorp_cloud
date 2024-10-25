@@ -4,6 +4,7 @@ import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,10 +18,13 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
+@EnableMethodSecurity
 @Configuration
 public class SpringSecurityConfig {
 
     public static final String ROLE_USER = "USER";
+
+    public static final String ROLE_ADMIN = "ADMIN";
 
     @Bean
     public UserDetailsService userDetailsService() {
@@ -30,13 +34,16 @@ public class SpringSecurityConfig {
         manager.createUser(
                 User.withUsername("user").password(encoder.encode("myPassword")).roles(ROLE_USER).build()
         );
+        manager.createUser(
+                User.withUsername("admin").password(encoder.encode("myPassword")).roles(ROLE_USER,ROLE_ADMIN).build()
+        );
         return manager;
     }
 
     @Bean
     @Order(SecurityProperties.BASIC_AUTH_ORDER)
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests((requests) -> requests.anyRequest().authenticated());
+        http.authorizeHttpRequests((requests) -> requests.anyRequest().hasRole(ROLE_USER));
         http.formLogin(withDefaults());
         http.httpBasic(withDefaults());
         return http.build();
@@ -47,7 +54,7 @@ public class SpringSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers(AntPathRequestMatcher.antMatcher("/api/**")).hasRole(ROLE_USER) //
+                        .requestMatchers(AntPathRequestMatcher.antMatcher("/api/**")).authenticated() //
                         .anyRequest().permitAll() //
                 )
                 .formLogin(withDefaults())
