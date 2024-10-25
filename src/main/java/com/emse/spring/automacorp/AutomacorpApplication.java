@@ -17,6 +17,7 @@ public class AutomacorpApplication {
 		SpringApplication.run(AutomacorpApplication.class, args);
 
 
+
 	}
 
 

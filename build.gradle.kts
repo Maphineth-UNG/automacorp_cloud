@@ -31,6 +31,9 @@ dependencies {
 	testImplementation("org.mockito:mockito-junit-jupiter:5.4.0")
 	testImplementation("org.assertj:assertj-core:3.24.2")
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0")
+	//Spring Security dependencies
+	implementation("org.springframework.boot:spring-boot-starter-security")
+	testImplementation("org.springframework.security:spring-security-test")
 
 
 }

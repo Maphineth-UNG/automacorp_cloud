@@ -66,12 +66,16 @@ import com.emse.spring.automacorp.dao.RoomDao;
 import com.emse.spring.automacorp.dao.WindowDao;
 import com.emse.spring.automacorp.dao.SensorDao;
 import com.emse.spring.automacorp.dao.HeaterDao;
+import com.emse.spring.automacorp.dto.WindowCommand;
 import com.emse.spring.automacorp.mapper.RoomMapper;
+import com.emse.spring.automacorp.mapper.WindowMapper;
 import com.emse.spring.automacorp.model.RoomEntity;
 import com.emse.spring.automacorp.model.SensorEntity;
 import com.emse.spring.automacorp.model.SensorType;
+import com.emse.spring.automacorp.model.WindowEntity;
 import com.emse.spring.automacorp.record.Room;
 import com.emse.spring.automacorp.dto.RoomCommand;
+import com.emse.spring.automacorp.record.Window;
 import jakarta.transaction.Transactional;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -128,6 +132,21 @@ public class RoomController {
             return ResponseEntity.ok(RoomMapper.of(updatedRoom));
         }
     }
+
+    // Need to add function for
+//    @PutMapping(path = "/{id}") // (10)
+//    public ResponseEntity<Room> update(@PathVariable Long id, @RequestBody RoomCommand room) {
+//        RoomEntity entity = roomDao.findById(id).orElse(null);
+//        if (entity == null) {
+//            return ResponseEntity.badRequest().build();
+//        }
+//        entity.setValue(room.floor());
+//        entity.setName(room.name());
+//        RoomEntity room = roomDao.findById(window.roomId()).orElseThrow(() -> new IllegalArgumentException("Invalid room ID"));
+//        entity.setRoom(room);
+//        // (11)
+//        return ResponseEntity.ok(WindowMapper.of(entity));
+//    }
 
     @DeleteMapping(path = "/{id}")
     public void delete(@PathVariable Long id) {
