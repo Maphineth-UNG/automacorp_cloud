@@ -52,7 +52,7 @@ public class SpringSecurityConfig {
                 )
                 .formLogin(withDefaults())
                 .httpBasic(withDefaults())
-                .build();   g
+                .build();
     }
 
 //    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
