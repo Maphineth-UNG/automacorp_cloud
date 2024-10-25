@@ -1,6 +1,7 @@
 package com.emse.spring.automacorp.api;
 
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,9 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class SecurityController {
     public record User(String username) {
     }
-
+    @PreAuthorize("hasRole('ADMIN')") // Here we add a constraint on the user role and user must have the role ADMIN
     @GetMapping(path = "/me")
     public User findUserName(@AuthenticationPrincipal UserDetails userDetails) {
         return new User(userDetails.getUsername());
     }
+
 }
