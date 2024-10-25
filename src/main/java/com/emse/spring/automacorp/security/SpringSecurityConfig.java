@@ -52,9 +52,9 @@ public class SpringSecurityConfig {
                 )
                 .formLogin(withDefaults())
                 .httpBasic(withDefaults())
-                .build();
+                .build();   g
     }
 
-    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    String currentPrincipalName = authentication.getName();
+//    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//    String currentPrincipalName = authentication.getName();
 }
